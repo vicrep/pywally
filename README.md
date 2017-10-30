@@ -41,3 +41,13 @@ PyWally uses Pylama a code audit tool which runs various style & complexity chec
 ```bash
 (venv) $ ptw
 ```
+
+### Running the server locally
+
+```bash
+(venv) $ flask run
+```
+or
+```bash
+(venv) $ python run.py
+```
