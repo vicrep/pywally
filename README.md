@@ -2,7 +2,14 @@
 
 An interactive P2P video wall SIP server.
 
+If you're new to Python, don't panic and read [The Hitchhiker’s Guide to Python!](http://docs.python-guide.org/en/latest/).
+
 ## Setup
+
+### Requirements
+- Python ≥3.6
+
+_If you want to manage and control your Python version accross projects, check out [pyenv](https://github.com/pyenv/pyenv)_
 
 ### Development environment
 
