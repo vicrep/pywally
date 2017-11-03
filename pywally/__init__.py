@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, Blueprint
 from flask_cors import CORS
 
-from pywally.blueprints.sample_page import sample_page
+from pywally.api import api
+from pywally.api.views.sessions import ns as sessions_ns
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -9,8 +10,12 @@ app = Flask(__name__, instance_relative_config=True)
 # https://flask-cors.readthedocs.io/en/latest/
 CORS(app)
 
-
-# Definition of the routes. Put them into their own file.
-app.register_blueprint(sample_page)
-
 app.config.from_object('config')
+
+
+def initialize():
+    blueprint = Blueprint('api', __name__, url_prefix='/api')
+    api.init_app(blueprint)
+    api.add_namespace(sessions_ns)
+    # NS config goes here
+    app.register_blueprint(blueprint)
