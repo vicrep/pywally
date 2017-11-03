@@ -13,6 +13,12 @@ CORS(app)
 app.config.from_object('config')
 
 
+@app.route('/')
+def index():
+    """Sample HTTP route"""
+    return 'Hello, world!'
+
+
 def initialize():
     blueprint = Blueprint('api', __name__, url_prefix='/api')
     api.init_app(blueprint)
