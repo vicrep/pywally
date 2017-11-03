@@ -5,18 +5,10 @@ from pywally.api import api
 
 client = api.model('Client', {
     'id': fields.String(required=True),
-    'name': fields.String(
-        description='Displayed name of the client',
-    ),
+    'name': fields.String(description='name of the client'),
     'client_type': fields.String(
-        description='''The type of client being represented.
-        - publishers represent the clients
-        which send video streams, who will be
-        received by an observer
-        - observer: a client which takes incoming
-        streams and displays them to the user''',
         required=True,
-        enum=['observer', 'publisher'],
+        enum=['observer', 'publisher']
     )
 })
 
@@ -30,20 +22,22 @@ publisher = api.inherit('Publisher', client, {
 
 session_info = api.model('Session Info', {
     'id': fields.String(required=True),
-    'name': fields.String(
-        description='Name of the session',
-    ),
+    'name': fields.String(description='name of the session'),
 })
 
-session = api.inherit('Session', session_info, {
+session = api.clone('Session', session_info, {
     'observer': fields.Nested(
         observer,
-        description='''The client responsible for
-        displaying the incoming video streams''',
+        description='''client which takes incoming
+        streams and displays them to the user''',
+        required=True
     ),
     'publishers': fields.List(
         fields.Nested(publisher),
-        description='List of active publishers',
+        description='''clients
+        which send video streams, who will be
+        received by an observer''',
+        required=True
     )
 })
 
@@ -53,7 +47,5 @@ session_list = api.model('Session List', {
 })
 
 session_create_req = api.model('New Session Request', {
-    'name': fields.String(
-        description='Name to give the session',
-    )
+    'name': fields.String(description='name to give the session'),
 })

@@ -20,7 +20,11 @@ class SessionsCollection(Resource):
         log.debug('Requested list of sessions')
         pass
 
-    @api.response(201, 'Session successfully created.')
+    @api.marshal_with(
+        models.session_info,
+        code=201,
+        description='Session successfully created.'
+    )
     @api.expect(models.session_create_req)
     def post(self):
         """Create a new session"""
@@ -34,5 +38,9 @@ class Session(Resource):
     @api.marshal_with(models.session)
     def get(self, id):
         """Get a session object"""
-        log.debug('Requested session (id:%s)', id)
+        log.debug('Requested session %s', id)
+        pass
+
+    def delete(self, id):
+        log.debug('Requested delete of session %s', id)
         pass
