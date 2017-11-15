@@ -1,9 +1,16 @@
 import uuid
+from typing import Dict, Any
+
+SessionType = Dict[str, Any]
+SessionsDict = Dict[str, SessionType]
 
 
 class SessionDAO(object):
+    """Class pertaining to the management and
+    business logic of sessions."""
+
     def __init__(self):
-        self.sessions = {}
+        self.sessions: SessionsDict = {}
 
     def create(self, name: str = ''):
         sid = str(uuid.uuid1())
