@@ -3,6 +3,7 @@ import logging
 from flask_restplus import Resource
 
 from pywally.api import api, models
+from pywally.api.session_state import DAO as session_state
 
 log = logging.getLogger(__name__)
 
@@ -18,7 +19,11 @@ class SessionsCollection(Resource):
     def get(self):
         """Get list of existing sessions"""
         log.debug('Requested list of sessions')
-        pass
+        sessions = session_state.get_all_sessions()
+        return {
+            'count': len(sessions),
+            'sessions': sessions,
+        }
 
     @api.marshal_with(
         models.session_info,
@@ -29,18 +34,19 @@ class SessionsCollection(Resource):
     def post(self):
         """Create a new session"""
         log.debug('Creating new session')
-        pass
+        req = api.payload
+        session = session_state.create(**req)
+        return session, 201
 
 
 @ns.route('/<string:id>')
-@api.response(404, 'Post not found.')
 class Session(Resource):
     @api.marshal_with(models.session)
     def get(self, id):
         """Get a session object"""
         log.debug('Requested session %s', id)
-        pass
+        return session_state.get_session(id)
 
     def delete(self, id):
         log.debug('Requested delete of session %s', id)
-        pass
+        return session_state.delete(id), 204

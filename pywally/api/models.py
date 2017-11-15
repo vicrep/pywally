@@ -30,7 +30,7 @@ session = api.clone('Session', session_info, {
         observer,
         description='''client which takes incoming
         streams and displays them to the user''',
-        required=True
+        required=False
     ),
     'publishers': fields.List(
         fields.Nested(publisher),
