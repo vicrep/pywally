@@ -45,8 +45,21 @@ class Session(Resource):
     def get(self, id):
         """Get a session object"""
         log.debug('Requested session %s', id)
-        return session_state.get_session(id)
+        session = session_state.get_session(id)
+        if session is None:
+            api.abort(
+                404,
+                'No session found with id {}.'.format(id)
+            )
+        return session
 
     def delete(self, id):
         log.debug('Requested delete of session %s', id)
-        return session_state.delete(id), 204
+        deleted = session_state.delete(id)
+        if deleted is False:
+            api.abort(
+                404,
+                'Cannot delete session {} since it does not exist.'.format(
+                    id)
+            )
+        return deleted, 204

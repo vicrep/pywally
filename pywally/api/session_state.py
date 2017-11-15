@@ -1,7 +1,5 @@
 import uuid
 
-from pywally.api import api
-
 
 class SessionDAO(object):
     def __init__(self):
@@ -19,24 +17,14 @@ class SessionDAO(object):
         return session
 
     def get_session(self, session_id: str):
-        if session_id not in self.sessions:
-            api.abort(
-                404,
-                'No session found with id {}.'.format(session_id)
-            )
-        else:
-            return self.sessions[session_id]
+        return self.sessions.get(session_id)
 
     def get_all_sessions(self):
         return list(self.sessions.values())
 
     def delete(self, session_id: str):
         if session_id not in self.sessions:
-            api.abort(
-                404,
-                'Cannot delete session {} since it does not exist.'.format(
-                    session_id)
-            )
+            return False
         self.sessions.pop(session_id)
         return True
 
