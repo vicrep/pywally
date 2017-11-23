@@ -54,3 +54,13 @@ PyWally uses Pylama a code audit tool which runs various style & complexity chec
 ```bash
 (venv) $ python run.py
 ```
+
+By default, this will create a new server instance at http://localhost:8000.
+The api can be accessed through the `/api` endpoint.
+
+#### Documentation
+
+The API system used allows for the automatic generation
+of [Swagger](https://swagger.io/) specs, and running the
+server creates a live documentation explorer, which can
+be accessed at the endpoint `/api/doc`.
