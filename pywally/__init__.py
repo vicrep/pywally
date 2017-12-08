@@ -3,6 +3,7 @@ from flask_cors import CORS
 
 from pywally.api import api
 from pywally.api.views.sessions import ns as sessions_ns
+from pywally.socket import init_socket
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -21,6 +22,7 @@ def index():
 
 def initialize():
     blueprint = Blueprint('api', __name__, url_prefix='/api')
+    socket = init_socket(app)
     api.init_app(blueprint)
     api.add_namespace(sessions_ns)
     # NS config goes here
